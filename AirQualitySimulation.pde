@@ -16,12 +16,23 @@ float t = 0;
 
 Fluid fluid;
 
+Table data;
+float[] nox;
+
 void settings() {
   size(N*SCALE, N*SCALE);
 }
 
 void setup() {
   fluid = new Fluid(0.2, 0, 0.0000001);
+  data = loadTable("ox2021.csv", "header");
+  int nrow = data.getRowCount();
+  nox = new float[nrow];
+  int i = 0;
+  for (TableRow row : data.rows()) {
+    nox[i] = (row.getFloat("nox"));
+    i++;
+  }
 }
 
 //void mouseDragged() {
@@ -29,11 +40,12 @@ void setup() {
 
 void draw() {
   background(0);
+
   int cx = int(0.5*width/SCALE);
   int cy = int(0.5*height/SCALE);
   for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
-      fluid.addDensity(cx+i, cy+j, random(50, 150));
+      fluid.addDensity(cx+i, cy+j, nox[0]);
     }
   }
   for (int i = 0; i < 2; i++) {
@@ -48,5 +60,5 @@ void draw() {
   fluid.step();
   fluid.renderD();
   //fluid.renderV();
-  //fluid.fadeD();
+  fluid.fadeD();
 }

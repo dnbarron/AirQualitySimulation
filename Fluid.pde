@@ -85,14 +85,21 @@ class Fluid {
   }
 
   void renderD() {
-    colorMode(HSB, 255);
+    colorMode(HSB, 360, 100, 100, 100);
 
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
         float x = i * SCALE;
         float y = j * SCALE;
         float d = this.density[IX(i, j)];
-        fill((d + 50) % 255,200,d);
+
+    //   fill((d + 50) % 360, 75, d);
+       // if (mousePressed == true) {
+       //   println(d);
+       // }
+    // GET THIS TO WORK
+        fill(map(41, 1, 650, 0, 360), 75, d,
+          map(41, 0, 700, 50, 100));
         noStroke();
         square(x, y, SCALE);
       }
@@ -119,7 +126,7 @@ class Fluid {
   void fadeD() {
     for (int i = 0; i < this.density.length; i++) {
       float d = density[i];
-      density[i] = constrain(d-0.02, 0, 255);
+      density[i] = constrain(d-0.02, 0, 100);
     }
   }
 }
