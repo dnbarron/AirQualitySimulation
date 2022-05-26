@@ -84,7 +84,7 @@ class Fluid {
     this.Vy[index] += amountY;
   }
 
-  void renderD() {
+  void renderD(float qual) {
     colorMode(HSB, 360, 100, 100, 100);
 
     for (int i = 0; i < N; i++) {
@@ -94,12 +94,9 @@ class Fluid {
         float d = this.density[IX(i, j)];
 
     //   fill((d + 50) % 360, 75, d);
-       // if (mousePressed == true) {
-       //   println(d);
-       // }
-    // GET THIS TO WORK
-        fill(map(41, 1, 650, 0, 360), 75, d,
-          map(41, 0, 700, 50, 100));
+        fill(map(qual, 40, 650, 0, 360), 75, d,
+             map(qual, 40, 650, 30, 100));
+          //   map(qual, 40, 650, 50, 255));
         noStroke();
         square(x, y, SCALE);
       }

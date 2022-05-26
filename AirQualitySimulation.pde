@@ -9,7 +9,7 @@
 // Fluid Simulation for Dummies by Mike Ash
 // https://mikeash.com/pyblog/fluid-simulation-for-dummies.html
 
-final int N = 128;
+final int N = 256;
 final int iter = 16;
 final int SCALE = 4;
 float t = 0;
@@ -18,6 +18,7 @@ Fluid fluid;
 
 Table data;
 float[] nox;
+int nrow;
 
 void settings() {
   size(N*SCALE, N*SCALE);
@@ -26,7 +27,7 @@ void settings() {
 void setup() {
   fluid = new Fluid(0.2, 0, 0.0000001);
   data = loadTable("ox2021.csv", "header");
-  int nrow = data.getRowCount();
+  nrow = data.getRowCount();
   nox = new float[nrow];
   int i = 0;
   for (TableRow row : data.rows()) {
@@ -45,7 +46,7 @@ void draw() {
   int cy = int(0.5*height/SCALE);
   for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
-      fluid.addDensity(cx+i, cy+j, nox[0]);
+      fluid.addDensity(cx + i, cy + j, 200);
     }
   }
   for (int i = 0; i < 2; i++) {
@@ -56,9 +57,11 @@ void draw() {
     fluid.addVelocity(cx, cy, v.x, v.y );
   }
 
-
   fluid.step();
-  fluid.renderD();
-  //fluid.renderV();
+
+  float qual = map(mouseX, 0, width, 40, 700);
+  fluid.renderD(qual);
+
+//  fluid.renderV();
   fluid.fadeD();
 }
