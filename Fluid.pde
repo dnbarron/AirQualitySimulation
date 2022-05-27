@@ -92,9 +92,8 @@ class Fluid {
         float x = i * SCALE;
         float y = j * SCALE;
         float d = this.density[IX(i, j)];
-
     //   fill((d + 50) % 360, 75, d);
-        fill(map(qual, 40, 650, 0, 360), 75, d,
+        fill(map(qual, 40, 650, 120, 360), 75, d,
              map(qual, 40, 650, 30, 100));
           //   map(qual, 40, 650, 50, 255));
         noStroke();
