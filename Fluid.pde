@@ -122,7 +122,7 @@ class Fluid {
   void fadeD() {
     for (int i = 0; i < this.density.length; i++) {
       float d = density[i];
-      density[i] = constrain(d-0.02, 0, 100);
+      density[i] = constrain(d - 0.02, 0, 100);
     }
   }
 }
