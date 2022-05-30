@@ -85,11 +85,13 @@ void draw() {
 
   }
   fluid.renderD(qual);
+
   fill(255);
   textSize(30);
-  text("NOx concentration: ", 40, height - 40);
-  text(qual, 300, height - 40);
-  text(hour(), width/2, height - 40);
+  String tmpstr = "NOx concentration: ".concat(nf(qual, 1, 2));
+  text(tmpstr, 40, height - 40);
+  tmpstr = str(hour()).concat(":00");
+  text(tmpstr, width/2, height - 40);
 
 //  fluid.renderV();
   fluid.fadeD();
