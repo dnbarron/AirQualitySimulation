@@ -18,7 +18,11 @@ Fluid fluid;
 
 Table data;
 float[] nox;
+String[] date;
+int[] hr;
+int[] dy;
 int nrow;
+float qual;
 
 void settings() {
   size(N*SCALE, N*SCALE);
@@ -26,12 +30,24 @@ void settings() {
 
 void setup() {
   fluid = new Fluid(0.2, 0, 0.0000001);
-  data = loadTable("ox2021.csv", "header");
+  data = loadTable("oxMay22.csv", "header");
   nrow = data.getRowCount();
   nox = new float[nrow];
+  date = new String[nrow];
+  hr = new int[nrow];
+  dy = new int[nrow];
+
   int i = 0;
   for (TableRow row : data.rows()) {
     nox[i] = (row.getFloat("nox"));
+    date[i] = row.getString("date");
+    char hrChr[] = {date[i].charAt(11),date[i].charAt(12)};
+    String hourStr = new String (hrChr);
+    hr[i] = int(hourStr);
+
+    char dayChr[] = {date[i].charAt(8), date[i].charAt(9)};
+    String dyStr = new String (dayChr);
+    dy[i] = int(dyStr);
     i++;
   }
 }
@@ -40,6 +56,7 @@ void setup() {
 //}
 
 void draw() {
+
   background(0);
 
   int cx = int(0.5*width/SCALE);
@@ -59,8 +76,20 @@ void draw() {
 
   fluid.step();
 
-  float qual = map(mouseX, 0, width, 40, 700);
+//  float qual = map(mouseX, 0, width, 40, 700);
+  for (int h = 0; h < nrow; h++){
+    if (hour() == hr[h] && day() == dy[h] + 1){
+      qual = nox[h];
+      break;
+    }
+
+  }
   fluid.renderD(qual);
+  fill(255);
+  textSize(30);
+  text("NOx concentration: ", 40, height - 40);
+  text(qual, 300, height - 40);
+  text(hour(), width/2, height - 40);
 
 //  fluid.renderV();
   fluid.fadeD();
