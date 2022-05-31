@@ -29,7 +29,7 @@ void settings() {
 }
 
 void setup() {
-  fluid = new Fluid(0.2, 0, 0.0000001);
+  fluid = new Fluid(0.2, 0.00001, 0.00000000001);
   data = loadTable("oxMay22.csv", "header");
   nrow = data.getRowCount();
   nox = new float[nrow];
@@ -59,8 +59,8 @@ void draw() {
 
   background(0);
 
-  int cx = int(0.5*width/SCALE);
-  int cy = int(0.5*height/SCALE);
+  int cx = int(0.5 * width / SCALE);
+  int cy = int(0.5 * height / SCALE);
   for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
       fluid.addDensity(cx + i, cy + j, 200);
@@ -84,14 +84,19 @@ void draw() {
     }
 
   }
+
   fluid.renderD(qual);
 
   fill(255);
   textSize(30);
   String tmpstr = "NOx concentration: ".concat(nf(qual, 1, 2));
-  text(tmpstr, 40, height - 40);
+  textAlign(LEFT);
+  text(tmpstr, 0, height - 40);
   tmpstr = str(hour()).concat(":00");
+  textAlign(CENTER);
   text(tmpstr, width/2, height - 40);
+  textAlign(RIGHT);
+  text(str(day()-1).concat(" May"), width, height - 40);
 
 //  fluid.renderV();
   fluid.fadeD();
